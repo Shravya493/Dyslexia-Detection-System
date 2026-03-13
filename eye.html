@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Accuracy Test</title>
+    <link rel="stylesheet" type="text/css" href="eye.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .accuracy {
+            margin-top: 20px;
+        }
+        input[type="text"], textarea {
+            font-size: 24px;
+            padding: 5px;
+            text-align: center;
+            width: 100%;
+            min-height: 30px;
+        }
+        #next-button, #move-to-next-test {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #move-to-next-test {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Typing Accuracy Test</h1>
+        <div id="typing-area">
+            <p id="test-instruction">Type the letter: <span id="letter-to-type"></span></p>
+            <input type="text" id="typed-letter" maxlength="1">
+        </div>
+        <div class="accuracy">
+            Accuracy: <span id="accuracy">0%</span>
+        </div>
+        <button id="next-button" onclick="nextLetter()">Next</button>
+        <button id="move-to-next-test" onclick="moveToNextTest()">Move to Test 2</button>
+    </div>
+
+    <script>
+        // Test 1 (Letters)
+        const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        let currentLetterIndex = 0;
+        let correctTyped = 0;
+        let totalTyped = 0;
+
+        // Test 2 (Words)
+        const words = ['apple', 'banana', 'cherry', 'date', 'elderberry'];
+        let currentWordIndex = 0;
+
+        // Test 3 (Sentences)
+        const sentences = [
+            'The quick brown fox jumps over the lazy dog.',
+            'A journey of a thousand miles begins with a single step.',
+            'To be or not to be, that is the question.'
+        ];
+        let currentSentenceIndex = 0;
+
+        function nextLetter() {
+            const typedLetter = document.getElementById('typed-letter').value.toLowerCase();
+            const letterToType = document.getElementById('letter-to-type').textContent;
+
+            if (typedLetter === letterToType) {
+                correctTyped++;
+            }
+
+            totalTyped++;
+            updateAccuracy();
+
+            // Clear the input field
+            document.getElementById('typed-letter').value = '';
+
+            // Move to the next letter
+            currentLetterIndex++;
+            if (currentLetterIndex < letters.length) {
+                document.getElementById('letter-to-type').textContent = letters[currentLetterIndex];
+            } else {
+                endTest1();
+            }
+        }
+
+        function updateAccuracy() {
+            const accuracy = (correctTyped / totalTyped) * 100;
+            document.getElementById('accuracy').textContent = accuracy.toFixed(2) + '%';
+        }
+
+        function endTest1() {
+            document.getElementById('test-instruction').textContent = 'Test complete!';
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('move-to-next-test').style.display = 'inline-block';
+        }
+
+        function moveToNextTest() {
+            if (currentWordIndex === 0) {
+                // Switch to Test 2 (Words)
+                document.getElementById('test-instruction').textContent = 'Type the word: ' + words[currentWordIndex];
+                document.getElementById('next-button').onclick = nextWord;
+                document.getElementById('move-to-next-test').textContent = 'Move to Test 3';
+
+                // Change the input field to accept more than one letter (for word test)
+                document.getElementById('typed-letter').setAttribute('maxlength', '20'); // You can adjust the max length if needed
+            } else if (currentSentenceIndex === 0) {
+                // Switch to Test 3 (Sentences)
+                document.getElementById('test-instruction').textContent = 'Type the sentence: ' + sentences[currentSentenceIndex];
+                document.getElementById('next-button').onclick = nextSentence;
+                document.getElementById('move-to-next-test').style.display = 'none'; // Hide the move button in Test 3
+                document.getElementById('typed-letter').type = 'textarea';  // Change input to textarea for sentence
+                document.getElementById('typed-letter').setAttribute('maxlength', ''); // Remove maxlength for sentence input
+            }
+            document.getElementById('move-to-next-test').style.display = 'none'; // Hide the button after it's clicked
+            document.getElementById('next-button').style.display = 'inline-block'; // Show next button again
+            document.getElementById('typed-letter').value = '';
+        }
+
+        function nextWord() {
+            const typedWord = document.getElementById('typed-letter').value.toLowerCase();
+            const wordToType = words[currentWordIndex];
+
+            if (typedWord === wordToType) {
+                correctTyped++;
+            }
+
+            totalTyped++;
+            updateAccuracy();
+
+            // Clear the input field
+            document.getElementById('typed-letter').value = '';
+
+            // Move to the next word
+            currentWordIndex++;
+            if (currentWordIndex < words.length) {
+                document.getElementById('test-instruction').textContent = 'Type the word: ' + words[currentWordIndex];
+            } else {
+                endTest2();
+            }
+        }
+
+        function endTest2() {
+            document.getElementById('test-instruction').textContent = 'Test complete!';
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('move-to-next-test').style.display = 'inline-block';
+        }
+
+        function nextSentence() {
+            const typedSentence = document.getElementById('typed-letter').value.trim().toLowerCase();
+            const sentenceToType = sentences[currentSentenceIndex].toLowerCase().trim();
+
+            if (typedSentence === sentenceToType) {
+                correctTyped++;
+            }
+
+            totalTyped++;
+            updateAccuracy();
+
+            // Clear the input field
+            document.getElementById('typed-letter').value = '';
+
+            // Move to the next sentence
+            currentSentenceIndex++;
+            if (currentSentenceIndex < sentences.length) {
+                document.getElementById('test-instruction').textContent = 'Type the sentence: ' + sentences[currentSentenceIndex];
+            } else {
+                endTest3();
+            }
+        }
+
+        function endTest3() {
+            document.getElementById('test-instruction').textContent = 'Test complete!';
+            document.getElementById('next-button').style.display = 'none';
+        }
+
+        // Initialize the first letter
+        document.getElementById('letter-to-type').textContent = letters[currentLetterIndex];
+    </script>
+</body>
+</html>

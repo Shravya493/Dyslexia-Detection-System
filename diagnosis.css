@@ -1,0 +1,182 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::after, *::before {
+  box-sizing: inherit;
+}
+
+.grid {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3.125%;
+  
+}
+.grid::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.col-3 {
+  float: left;
+  display: block;
+  margin-right: 3.1684362651%;
+  width: 31.2210424899%;
+}
+.col-3:last-child {
+  margin-right: 0;
+}
+@media (max-width: 570px) {
+  .col-3 {
+    float: left;
+    display: block;
+    margin-right: 3.1684362651%;
+    width: 100%;
+  }
+  .col-3:last-child {
+    margin-right: 0;
+  }
+}
+
+body {
+  background: #EFEFEF;
+  color: #292929;
+  font-family: 'Open Sans', 'Roboto', sans-serif;
+  font-size: 18px;
+}
+body a {
+  text-decoration: none;
+  color: inherit;
+}
+body a:hover {
+  text-decoration: underline;
+}
+
+header {
+  width: 100%;
+  background: #e0e0e0;
+  box-shadow: 0 0 5px 1px black;
+  margin-bottom: 20px;
+}
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 3.125%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+}
+header .container button {
+  display: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+@media (max-width: 570px) {
+  header .container button {
+    display: block;
+  }
+}
+header .container nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+}
+@media (max-width: 570px) {
+  header .container nav {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    position: absolute;
+    left: 0;
+    top: 71px;
+    width: 100%;
+  }
+  header .container nav a {
+    background: #EFEFEF;
+    text-align: center;
+    width: 100%;
+  }
+}
+header .container nav a {
+  padding: 22px 10px;
+}
+header .container nav a:hover {
+  text-decoration: none;
+  background: #c7c7c7;
+}
+
+main .hero {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: url(dylexia-background.png) no-repeat top center;
+  background-size: cover;
+  opacity: 0.85;
+ 
+}
+main .hero .text {
+  padding: 10%;
+  width: 100%;
+  height: 100%;
+  /* background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)); */
+  text-align: right;
+  color: black;
+  font-weight: 800;
+}  
+
+main .hero .text .btn {
+  background: #638CCF;
+  border-radius: 4px;
+  padding: 8px;
+}
+main .hero .text .btn:hover {
+  text-decoration: none;
+  background: #507ec9;
+}
+main .hero .text .btn:active {
+  background: #3c6fc3;
+}
+main .grid {
+  max-width: 1400px;
+}
+main .grid .panel {
+  background: #EFEFEF;
+}
+main .grid .panel .head {
+  text-align: center;
+}
+main .grid .panel .head .material-icons {
+  font-size: 30px;
+}
+main .grid .panel .body {
+  padding: 0 5px;
+}
+
+footer {
+  width: 100%;
+  background: #292929;
+}
+footer .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #EFEFEF;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: center;
+  padding: 3.125%;
+}
+footer .container .item:first-of-type a {
+  display: block;
+}
+
+/*Speech*/

@@ -1,0 +1,70 @@
+<html>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Roboto:400,500|Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://file.myfontastic.com/n6vo44Re5QaWo8oCKShBs7/icons.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="script.js"></script>
+<head>
+  <title>Convert Books</title>
+</head>
+<header>
+  <div class='container'>
+    <h3>Dyslexia Detector</h3>
+    <button id='menu-toggle'>
+      <i class='material-icons'>menu</i>
+    </button>
+    <nav id='nav'>
+      <a href='index.html'>Home</a>
+      <a href='#'>Convert Books</a>
+
+    </nav>
+  </div>
+</header>
+<main>
+  <div class='hero'>
+    <div class='text'>
+      <h1>Fight Dyslexia Infosys Way...</h1>
+	  
+	 
+		<form action = "http://127.0.0.1:5000/BooksConverter" method = "POST">
+			<input type="file" name="browse">
+			<a href="http://127.0.0.1:5000/"><button type="submit">Submit</button></a>
+		</form>
+
+	
+	
+
+      <!-- Select a file: <input type="file" name="myFile">
+      <a href='#' input type="file" class='btn'>Browse!</a>
+	  <input type="file" id="browse" name="fileupload" style="display: none" onChange="Handlechange();"/>
+	  <input type="text" id="filename" readonly="true"/>
+	  <input type="button" value="Click to select file" id="fakeBrowse" onclick="HandleBrowseClick();"/>
+	  -->
+    </div>
+  </div>
+  
+  </div>
+</main>
+<footer>
+  <div class='container'>
+    <div class='item'>
+      <p>
+        <a href='#'>Your Privacy</a>
+        <h1>Data Pirates <i class="fa fa-flag" aria-hidden="true"></i>
+        </h1>
+        
+      </p>
+    </div>
+    <div class='item'>
+      <p>
+        <a href='#'><i class='socicon-facebook'></i></a>
+        <a href='#'><i class='socicon-twitter'></i></a>
+        <a href='#'><i class='socicon-instagram'></i></a>
+        <a href='#'><i class='socicon-mail'></i></a>
+    </div>
+  </div>
+</footer>
+
+</html>

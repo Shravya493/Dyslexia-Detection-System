@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Recognition for Dyslexia Testing</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #note-textarea {
+            width: 80%;
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #progress {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Speech Detection for Dyslexia Testing</h1>
+    <p>This feature helps dyslexic children make notes by interpreting speech and typing based on what they hear. The difficulty level increases gradually.</p>
+
+    <h3 class="no-browser-support" style="display:none;">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In Google Chrome.</h3>
+
+    <div class="app"> 
+        <div class="level-indicator" id="level-indicator">Level 1</div>
+        <div class="input-single">
+            <textarea id="note-textarea" placeholder="Type based on what you hear." rows="6"></textarea>
+        </div>         
+        <button id="start-level-btn" title="Start Level">Start Level</button>
+        <p id="recording-instructions">Click <strong>Start Level</strong> to begin. You will hear words or sentences based on the current level. Press Enter to submit your response.</p>
+        
+        <h3>Progress</h3>
+        <ul id="progress">
+            <li><p class="no-progress"></p></li>
+        </ul>
+
+        <canvas id="dyslexiaReportChart" width="400" height="400"></canvas> <!-- Pie chart -->
+    </div>
+</div>
+
+<script>
+    let voices = [];
+    const levelData = {
+        1: ["cat", "dog", "ball", "sun", "tree", "book"],
+        2: ["I like cake", "Play with dog", "It is sunny", "The bird flies high", "The dog is barking"],
+        3: ["The cat is on the roof", "I enjoy playing outside", "Learning new things is fun"]
+    };
+
+    let currentLevel = 1;
+    let currentRound = 0;
+    let score = 0;
+    let userResponse = '';
+    let totalRounds = 3; // Number of rounds per level
+    let totalCorrect = 0;
+    let totalIncorrect = 0;
+    let currentWord = '';
+
+    const levelButton = document.getElementById('start-level-btn');
+    const progressList = document.getElementById('progress');
+
+    // Check if the browser supports SpeechSynthesis
+    if ('speechSynthesis' in window) {
+        console.log("Web Speech API is supported!");
+        document.querySelector('.no-browser-support').style.display = 'none';
+    } else {
+        console.log("Web Speech API is NOT supported!");
+        document.querySelector('.no-browser-support').style.display = 'block';
+    }
+
+    // Load voices once the speech synthesis is available
+    function loadVoices() {
+        voices = window.speechSynthesis.getVoices();
+        console.log("Loaded voices:", voices); // Log voices to check if we have access to them
+        if (voices.length === 0) {
+            console.error("No voices available.");
+        }
+    }
+
+    // Handle the 'voiceschanged' event
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    } else {
+        // Manually load voices if onvoiceschanged is not supported
+        loadVoices();
+    }
+
+    function startRecognition() {
+        let data = levelData[currentLevel];
+        currentWord = data[currentRound];
+        let msg = new SpeechSynthesisUtterance(currentWord);
+
+        // Ensure we have voices loaded
+        if (voices.length === 0) {
+            console.error("Voices are not yet loaded!");
+            return;
+        }
+
+        // Try to find an Indian accent voice (en-IN)
+        let indianVoice = voices.find(voice => voice.lang === 'en-IN');
+
+        if (indianVoice) {
+            msg.voice = indianVoice; // Set to Indian accent voice
+        } else {
+            msg.voice = voices[0]; // Default voice if Indian accent is not found
+            console.warn('Indian accent voice not found. Using default voice.');
+        }
+
+        window.speechSynthesis.speak(msg);
+        document.getElementById('recording-instructions').textContent = `Level ${currentLevel}, Round ${currentRound + 1}: Type what you heard! Press Enter to submit.`;
+    }
+
+    levelButton.addEventListener('click', function() {
+        if (currentRound < totalRounds) {
+            startRecognition();
+        } else {
+            nextLevel();
+        }
+    });
+
+    function nextLevel() {
+        currentLevel++;
+        currentRound = 0;
+
+        if (currentLevel > 3) {
+            generateReport();
+        } else {
+            levelButton.textContent = `Start Level ${currentLevel}`;
+            document.getElementById('level-indicator').textContent = `Level ${currentLevel}`;
+            startRecognition();
+        }
+    }
+
+    document.getElementById('note-textarea').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();  // Prevent form submission
+            userResponse = this.value.trim().toLowerCase();
+            checkResponse();
+            this.value = '';  // Clear input for next round
+        }
+    });
+
+    function checkResponse() {
+        let result = '';
+        if (userResponse === currentWord.toLowerCase()) {
+            score++;
+            totalCorrect++;
+            result = "Correct!";
+        } else {
+            totalIncorrect++;
+            result = `Incorrect! The correct answer was "${currentWord}".`;
+        }
+
+        updateProgress(result);
+
+        if (currentRound >= totalRounds - 1) {
+            nextLevel();
+        } else {
+            currentRound++;
+            startRecognition();
+        }
+    }
+
+    function updateProgress(result) {
+        let li = document.createElement('li');
+        li.innerHTML = `<strong>Level ${currentLevel}, Round ${currentRound + 1}</strong>: 
+                        Spoken: "${currentWord}" | Your Response: "${userResponse}" - <em>${result}</em>`;
+        progressList.appendChild(li);
+    }
+
+    function generateReport() {
+        let accuracy = (totalCorrect / (totalRounds * 3)) * 100;
+        let dyslexiaStatus = '';
+
+        if (accuracy >= 85) {
+            dyslexiaStatus = "No symptoms of dyslexia.";
+        } else if (accuracy >= 50) {
+            dyslexiaStatus = "Mild symptoms of dyslexia.";
+        } else {
+            dyslexiaStatus = "Severe symptoms of dyslexia.";
+        }
+
+        document.getElementById('recording-instructions').textContent = `Your accuracy was ${accuracy.toFixed(2)}%. Diagnosis: ${dyslexiaStatus}`;
+    }
+</script>
+
+</body>
+</html>

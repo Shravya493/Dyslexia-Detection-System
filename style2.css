@@ -1,0 +1,159 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to right, #7db8e0, #243d69); /* Colorful gradient background */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Welcome Message Styling Inside the Container */
+.welcome-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.dyslexia-text {
+    font-size: 2.5rem;
+    color: #ff6a00;
+    font-weight: 700;
+    letter-spacing: 5px;
+}
+
+.dyslexia-text span {
+    display: inline-block;
+    transition: transform 0.3s ease; /* Add hover effect */
+}
+
+/* Flipping certain letters to create a dyslexia-like appearance */
+.flip {
+    transform: scaleX(-1); /* Mirrors the letters horizontally */
+}
+
+/* Hover effect on letters */
+.dyslexia-text span:hover {
+    transform: scale(1.2); /* Letters enlarge slightly on hover */
+    color: #2575fc; /* Changes color when hovered */
+}
+
+.subtext {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+}
+
+/* Container & Form Styles */
+.container {
+    background: #ffffff;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-10px); /* Slight hover effect */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    padding: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f2f2f2;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #ff6a00;
+    box-shadow: 0 0 8px rgba(255, 106, 0, 0.5);
+    outline: none;
+}
+
+/* Button Styles */
+.btn {
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    color: #fff;
+    background: linear-gradient(45deg, #ff6a00, #ee0979);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: linear-gradient(45deg, #ee0979, #ff6a00);
+    box-shadow: 0 5px 15px rgba(255, 106, 0, 0.5);
+}
+
+p {
+    margin-top: 1.8rem;
+    color: #555;
+}
+
+a {
+    color: #2575fc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #6a11cb;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: #777;
+}
+
+footer a {
+    color: #ff6a00;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+}

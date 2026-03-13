@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Testing - Dyslexia Detector</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="quiz.js"></script>
+    <link rel="stylesheet" type="text/css" href="quiz.css"></link>
+</head>
+<body>
+    <div id="main">
+        <div id="First">
+            <h1><strong>Welcome to the Diagnostic Testing Portal!!!</strong></h1>
+            <br>
+            <h2>Profile Information:</h2>
+            <p id="profile-info"></p>
+            <br>
+            <div class="start">
+                <button id="startQuiz">Start Questionnaire</button>
+            </div>
+        </div>
+
+        <div id="Score">
+            <h4> Result:</h4>
+            <p id="score"></p><br>
+            <p id="dys"></p><br>
+            <button id="restart">Restart</button>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve profile data from localStorage
+        const profileData = JSON.parse(localStorage.getItem('profileData'));
+
+        // Display profile data or prompt user to set it up
+        if (profileData) {
+            document.getElementById('profile-info').innerText = `Name: ${profileData.name}, Age: ${profileData.age}, Gender: ${profileData.gender}`;
+            
+            // Set age group based on the user's age
+            let ageGroup = '';
+            const age = profileData.age;
+
+            if (age >= 5 && age <= 14) {
+                ageGroup = 'diagnosis(5-14).html';
+            } else if (age >= 15 && age <= 25) {
+                ageGroup = 'diagnosis(15-25).html';
+            } else if (age >= 26 && age <= 50) {
+                ageGroup = 'diagnosis(26-50).html';
+            } else if (age >= 51) {
+                ageGroup = 'diagnosis(50+).html';
+            }
+
+            document.getElementById('startQuiz').addEventListener('click', function() {
+                // Redirect to the appropriate diagnostic questions page based on age group
+                window.location.href = ageGroup;
+            });
+        } else {
+            alert('Profile data not found. Please set up your profile first.');
+            window.location.href = 'setup-profile.html';
+        }
+    </script>
+</body>
+</html>

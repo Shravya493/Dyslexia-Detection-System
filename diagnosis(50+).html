@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyslexia Screening Quiz</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="quiz.js"></script>
+    <link rel="stylesheet" type="text/css" href="quiz.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            let currentQuestion = 0;
+            const questions = $(".question");
+            const totalQuestions = questions.length;
+            const resultDiv = $("#Result");
+            resultDiv.hide();
+            questions.hide();
+            questions.eq(currentQuestion).show();
+
+            const severityCount = { Always: 0, Often: 0, Sometimes: 0, Rarely: 0, Never: 0 };
+
+            $("#next").click(function () {
+                if (!$("input[name='options" + (currentQuestion + 1) + "']:checked").val()) {
+                    alert("Please answer this question before proceeding.");
+                } else if (currentQuestion < totalQuestions - 1) {
+                    questions.eq(currentQuestion).hide();
+                    currentQuestion++;
+                    questions.eq(currentQuestion).show();
+                } else {
+                    alert("You have reached the end of the quiz. Click Submit to see your result.");
+                }
+            });
+
+            $("#prev").click(function () {
+                if (currentQuestion > 0) {
+                    questions.eq(currentQuestion).hide();
+                    currentQuestion--;
+                    questions.eq(currentQuestion).show();
+                }
+            });
+
+            $("#submit").click(function () {
+                $("input[type=radio]:checked").each(function () {
+                    severityCount[$(this).val()]++;
+                });
+
+                const highestSeverity = Object.keys(severityCount).reduce((a, b) => severityCount[a] > severityCount[b] ? a : b);
+
+                let diagnosis = "";
+                let solution = "";
+                switch (highestSeverity) {
+                    case "Always":
+                        diagnosis = "Severe Symptoms of Dyslexia.";
+                        solution = "Consult a specialist immediately for a comprehensive evaluation and therapy.";
+                        break;
+                    case "Often":
+                        diagnosis = "High Risk of Dyslexia.";
+                        solution = "Seek professional guidance soon. Structured literacy programs may be helpful.";
+                        break;
+                    case "Sometimes":
+                        diagnosis = "Moderate Risk of Dyslexia.";
+                        solution = "Consider working with a tutor or using assistive tools to improve comprehension.";
+                        break;
+                    case "Rarely":
+                        diagnosis = "Mild Risk of Dyslexia.";
+                        solution = "Practice reading and writing regularly. Use apps designed for dyslexia support.";
+                        break;
+                    case "Never":
+                        diagnosis = "No Dyslexia Symptoms Detected.";
+                        solution = "You seem to be doing well. Continue to monitor for any challenges.";
+                        break;
+                }
+
+                questions.hide();
+                resultDiv.show();
+                $("#diagnosis").text(diagnosis);
+                $("#solution").text("Recommended Solution: " + solution);
+            });
+
+            $("#restart").click(function () {
+                $("input[type=radio]").prop("checked", false);
+                resultDiv.hide();
+                currentQuestion = 0;
+                questions.hide();
+                questions.eq(currentQuestion).show();
+            });
+            // Speech function
+            function speakText(text) {
+                const speech = new SpeechSynthesisUtterance();
+                speech.text = text;
+                speech.lang = 'en-IN'; // Indian English accent
+                window.speechSynthesis.speak(speech);
+            }
+
+            // Add speaker icon click event for each question
+            $(".question").each(function () {
+                const questionText = $(this).find("p").text();
+                $(this).find(".speaker-icon").click(function () {
+                    speakText(questionText);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id='main'>
+        <h1>Dyslexia Screening Quiz</h1>
+
+        <!-- Questions -->
+        <div class='question'>
+            <p>1) Do you find it difficult to read small print or long passages, especially when reading for leisure or work?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options1' type='radio' value='Always'>Always<br>
+                <input name='options1' type='radio' value='Often'>Often<br>
+                <input name='options1' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options1' type='radio' value='Rarely'>Rarely<br>
+                <input name='options1' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+
+        <div class='question'>
+            <p>2) Do you experience eye strain, headaches, or fatigue after reading for a period of time?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options2' type='radio' value='Always'>Always<br>
+                <input name='options2' type='radio' value='Often'>Often<br>
+                <input name='options2' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options2' type='radio' value='Rarely'>Rarely<br>
+                <input name='options2' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+
+        <div class='question'>
+            <p>3) Do you often have trouble remembering or following instructions when they are written down?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options3' type='radio' value='Always'>Always<br>
+                <input name='options3' type='radio' value='Often'>Often<br>
+                <input name='options3' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options3' type='radio' value='Rarely'>Rarely<br>
+                <input name='options3' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>4) Do you find it challenging to balance reading and other daily tasks, such as shopping lists or bills?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options4' type='radio' value='Always'>Always<br>
+                <input name='options4' type='radio' value='Often'>Often<br>
+                <input name='options4' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options4' type='radio' value='Rarely'>Rarely<br>
+                <input name='options4' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>5)Do you frequently mix up words or misread familiar words while reading?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options5' type='radio' value='Always'>Always<br>
+                <input name='options5' type='radio' value='Often'>Often<br>
+                <input name='options5' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options5' type='radio' value='Rarely'>Rarely<br>
+                <input name='options5' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>6) Do you rely on audio books or text-to-speech software to help you read?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options6' type='radio' value='Always'>Always<br>
+                <input name='options6' type='radio' value='Often'>Often<br>
+                <input name='options6' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options6' type='radio' value='Rarely'>Rarely<br>
+                <input name='options6' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>7) Have you ever been diagnosed with a learning difficulty or reading problem?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options7' type='radio' value='Always'>Always<br>
+                <input name='options7' type='radio' value='Often'>Often<br>
+                <input name='options7' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options7' type='radio' value='Rarely'>Rarely<br>
+                <input name='options7' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>8) Do you avoid reading or writing tasks because they feel overwhelming or too difficult?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options8' type='radio' value='Always'>Always<br>
+                <input name='options8' type='radio' value='Often'>Often<br>
+                <input name='options8' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options8' type='radio' value='Rarely'>Rarely<br>
+                <input name='options8' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>9) Do you find it harder to retain information after reading something, such as a news article or book?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options9' type='radio' value='Always'>Always<br>
+                <input name='options9' type='radio' value='Often'>Often<br>
+                <input name='options9' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options9' type='radio' value='Rarely'>Rarely<br>
+                <input name='options9' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+        <div class='question'>
+            <p>10)Has difficulty reading or writing ever caused you to experience frustration or embarrassment in social situations?</p>
+            <i class="fas fa-volume-up speaker-icon" title="Read Question"></i>
+            <form>
+                <input name='options10' type='radio' value='Always'>Always<br>
+                <input name='options10' type='radio' value='Often'>Often<br>
+                <input name='options10' type='radio' value='Sometimes'>Sometimes<br>
+                <input name='options10' type='radio' value='Rarely'>Rarely<br>
+                <input name='options10' type='radio' value='Never'>Never<br>
+            </form>
+        </div>
+
+        
+        <!-- Result -->
+        <div id="Result">
+            <h4>Your Diagnosis:</h4>
+            <p id="diagnosis"></p>
+            <h4>Recommended Solution:</h4>
+            <p id="solution"></p>
+            <button id="restart">Restart</button>
+        </div>
+        <div>
+            <button id="prev">Previous</button>
+            <button id="next">Next</button>
+            <button id="submit">Submit</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Up Profile - Dyslexia Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        input, select, textarea, button {
+            font-size: 1rem;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .btn {
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            label, input, select, textarea, button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Set Up Your Profile</h2>
+        <form id="profileForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="school">School Name (if applicable):</label>
+            <input type="text" id="school" name="school" placeholder="Enter school name">
+
+            <label for="difficulty">Do you face any specific reading or writing challenges?</label>
+            <textarea id="difficulty" name="difficulty" placeholder="Describe any challenges..." rows="4"></textarea>
+
+            <label for="guardian">Guardian Name:</label>
+            <input type="text" id="guardian" name="guardian" placeholder="Enter guardian's name" required>
+
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" name="contact" placeholder="Enter contact number" required>
+
+            <button type="submit" class="btn">Save Profile</button>
+        </form>
+        <a href="index.html" class="btn">Go to Main Page</a>
+    </div>
+    <script type="text/javascript">
+        document.getElementById('profileForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission for demo purposes
+
+            // Get form data
+            const profile = {
+                name: document.getElementById('name').value,
+                age: document.getElementById('age').value,
+                dob: document.getElementById('dob').value,
+                gender: document.getElementById('gender').value,
+                school: document.getElementById('school').value,
+                difficulty: document.getElementById('difficulty').value,
+                guardian: document.getElementById('guardian').value,
+                contact: document.getElementById('contact').value
+            };
+
+            // Save the profile data in localStorage
+            localStorage.setItem('profileData', JSON.stringify(profile));
+
+            alert('Profile information saved successfully!');
+        });
+    </script>
+</body>
+</html>

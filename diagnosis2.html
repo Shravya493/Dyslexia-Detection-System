@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+  <title>Diagnostic Testing</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="quiz.css">
+  <style>
+    .container {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      margin: 20px auto;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #000;
+      cursor: crosshair;
+    }
+    .question {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    #but {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #result {
+      display: none;
+      text-align: center;
+    }
+    #feedback {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h3 id="title">Diagnostic Testing</h3>
+  <div id="main">
+    <!-- Question Containers -->
+    <div class="question active" id="q1">
+      <p>1) Underline all the 'A' you see in the box.</p>
+      <div class="container">
+        <img src="ques1.png" alt="Question 1">
+        <canvas id="canvas1"></canvas>
+      </div>
+      <button id="check1">Check Answer</button>
+      <div id="feedback1"></div>
+    </div>
+
+    <div class="question" id="q2">
+      <p>2) Join the numbers in their sequence, without lifting your pencil.</p>
+      <div class="container">
+        <img src="ques2.png" alt="Question 2">
+        <canvas id="canvas2"></canvas>
+      </div>
+      <button id="check2">Check Answer</button>
+      <div id="feedback2"></div>
+    </div>
+
+    <div class="question" id="q3">
+      <p>3) Help the boy find his house.</p>
+      <div class="container">
+        <img src="ques3.png" alt="Question 3">
+        <canvas id="canvas3"></canvas>
+      </div>
+      <button id="check3">Check Answer</button>
+      <div id="feedback3"></div>
+    </div>
+
+    <div class="question" id="q4">
+      <p>4) Draw the stems to complete the picture.</p>
+      <div class="container">
+        <img src="ques4.png" alt="Question 4">
+        <canvas id="canvas4"></canvas>
+      </div>
+      <button id="check4">Check Answer</button>
+      <div id="feedback4"></div>
+    </div>
+
+    <div class="question" id="q5">
+      <p>5) Circle all the even numbers in the grid.</p>
+      <div class="container">
+        <img src="ques5.png" alt="Question 5">
+        <canvas id="canvas5"></canvas>
+      </div>
+      <button id="check5">Check Answer</button>
+      <div id="feedback5"></div>
+    </div>
+
+    <div class="question" id="q6">
+      <p>6) Trace the shape without lifting your pencil or retracing lines.</p>
+      <div class="container">
+        <img src="ques6.png" alt="Question 6">
+        <canvas id="canvas6"></canvas>
+      </div>
+      <button id="check6">Check Answer</button>
+      <div id="feedback6"></div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div id="but">
+      <button id="prev" disabled>Previous</button>
+      <button id="next">Next</button>
+      <button id="submit" style="display: none;">Submit</button>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result">
+      <h4>Your Results:</h4>
+      <p id="score"></p>
+      <button id="restart">Restart</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = document.querySelectorAll('.question');
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Initialize canvas for drawing
+    function initCanvas(canvasId, checkButtonId, feedbackId, checkFunction) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+
+      canvas.addEventListener('mousedown', () => {
+        drawing = true;
+      });
+
+      canvas.addEventListener('mouseup', () => {
+        drawing = false;
+        ctx.beginPath();
+      });
+
+      canvas.addEventListener('mousemove', (event) => {
+        if (!drawing) return;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'red';
+
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+      });
+
+      document.getElementById(checkButtonId).addEventListener('click', () => {
+        checkFunction(ctx, feedbackId);
+      });
+    }
+
+    // Check answer functions
+    function checkQ1(ctx, feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      // Logic to check if all A's are circled
+      feedback.textContent = "Correct answer!";
+      score++;
+    }
+
+    function checkQ2(ctx, feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      // Logic to check if numbers are joined in sequence correctly
+      feedback.textContent = "Correct answer!";
+      score++;
+    }
+
+    function checkQ3(ctx, feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      // Logic to check if path reaches the house correctly
+      feedback.textContent = "Correct answer!";
+      score++;
+    }
+
+    function checkQ4(ctx, feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      // Logic to check if stems are drawn correctly
+      feedback.textContent = "Correct answer!";
+      score++;
+    }
+
+    function checkQ5(ctx, feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      // Logic to check if all even numbers are circled
+      feedback.textContent = "Correct answer!";
+      score++;
+    }
+
+    function checkQ6(ctx, feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      // Logic to check if the shape was traced correctly
+      feedback.textContent = "Correct answer!";
+      score++;
+    }
+
+    // Show the current question
+    function showQuestion(index) {
+      questions.forEach((question, i) => {
+        question.classList.toggle('active', i === index);
+      });
+
+      // Handle button visibility
+      document.getElementById('prev').disabled = index === 0;
+      document.getElementById('next').style.display = index === questions.length - 1 ? 'none' : 'inline-block';
+      document.getElementById('submit').style.display = index === questions.length - 1 ? 'inline-block' : 'none';
+    }
+
+    document.getElementById('prev').addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+      }
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+      }
+    });
+
+    document.getElementById('submit').addEventListener('click', () => {
+      // Display the results (dummy logic for now)
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('score').textContent = `Your score: ${score}/8`;
+    });
+
+    document.getElementById('restart').addEventListener('click', () => {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('main').style.display = 'block';
+      document.getElementById('result').style.display = 'none';
+      showQuestion(currentQuestion);
+    });
+
+    // Initialize all canvases
+    initCanvas("canvas1", "check1", "feedback1", checkQ1);
+    initCanvas("canvas2", "check2", "feedback2", checkQ2);
+    initCanvas("canvas3", "check3", "feedback3", checkQ3);
+    initCanvas("canvas4", "check4", "feedback4", checkQ4);
+    initCanvas("canvas5", "check5", "feedback5", checkQ5);
+    initCanvas("canvas6", "check6", "feedback6", checkQ6);
+
+    // Start with the first question
+    showQuestion(currentQuestion);
+  </script>
+</body>
+</html>

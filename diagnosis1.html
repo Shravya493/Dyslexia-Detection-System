@@ -1,0 +1,166 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!doctype html>
+<html>
+<head>
+    <title>Sub-Test 1</title>
+    <script type='text/javascript' src='jquery-3.2.1.min.js'></script>
+    <script type='text/javascript' src='quiz.js'></script>
+    <link rel="stylesheet" type="text/css" href="quiz.css"></link>
+</head>
+<body>
+    <h3 id='title'>Diagnostic Testing</h3>
+    <div id='main'>
+        <div id='First'>
+            <h1><strong>Sub-Test 1</strong></h1>
+            <br>
+            <h2>Click here to begin:</h2>
+            <div class='start'>
+                <button name='start'>Start</button>
+            </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class='question'>
+            <p>1) When you read, do you sometimes mix up letters or words?</p>
+            <p>Feelings:</p>
+            <form>
+                <input name='options1' type='radio' value='1'><span>Often</span></input><br><br>
+                <input name='options1' type='radio' value='2'><span>Sometimes</span></input><br><br>
+                <input name='options1' type='radio' value='3'><span>Rarely</span></input><br><br>
+                <input name='options1' type='radio' value='4'><span>Never</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 2 -->
+        <div class='question'>
+            <p>2) How confident do you feel when you try to spell new words?</p>
+            <p>Confidence Level:</p>
+            <form>
+                <input name='options2' type='radio' value='1'><span>Very confident</span></input><br><br>
+                <input name='options2' type='radio' value='2'><span>Somewhat confident</span></input><br><br>
+                <input name='options2' type='radio' value='3'><span>Neutral</span></input><br><br>
+                <input name='options2' type='radio' value='4'><span>Not very confident</span></input><br><br>
+                <input name='options2' type='radio' value='5'><span>Not at all confident</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 3 -->
+        <div class='question'>
+            <p>3) Do you find it hard to follow along when someone reads aloud?</p>
+            <p>Experience:</p>
+            <form>
+                <input name='options3' type='radio' value='1'><span>Always</span></input><br><br>
+                <input name='options3' type='radio' value='2'><span>Usually</span></input><br><br>
+                <input name='options3' type='radio' value='3'><span>Sometimes</span></input><br><br>
+                <input name='options3' type='radio' value='4'><span>Rarely</span></input><br><br>
+                <input name='options3' type='radio' value='5'><span>Never</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 4 -->
+        <div class='question'>
+            <p>4) When writing, how often do you notice that your letters are not formed correctly?</p>
+            <p>Frequency:</p>
+            <form>
+                <input name='options4' type='radio' value='1'><span>Always</span></input><br><br>
+                <input name='options4' type='radio' value='2'><span>Often</span></input><br><br>
+                <input name='options4' type='radio' value='3'><span>Sometimes</span></input><br><br>
+                <input name='options4' type='radio' value='4'><span>Rarely</span></input><br><br>
+                <input name='options4' type='radio' value='5'><span>Never</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 5 -->
+        <div class='question'>
+            <p>5) How do you feel about reading out loud in front of others?</p>
+            <p>Feelings:</p>
+            <form>
+                <input name='options5' type='radio' value='1'><span>Very comfortable</span></input><br><br>
+                <input name='options5' type='radio' value='2'><span>Somewhat comfortable</span></input><br><br>
+                <input name='options5' type='radio' value='3'><span>Neutral</span></input><br><br>
+                <input name='options5' type='radio' value='4'><span>Somewhat uncomfortable</span></input><br><br>
+                <input name='options5' type='radio' value='5'><span>Very uncomfortable</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 6 -->
+        <div class='question'>
+            <p>6) When you hear a new word, how easy is it for you to remember it?</p>
+            <p>Memory Ease:</p>
+            <form>
+                <input name='options6' type='radio' value='1'><span>Very easy</span></input><br><br>
+                <input name='options6' type='radio' value='2'><span>Somewhat easy</span></input><br><br>
+                <input name='options6' type='radio' value='3'><span>Neutral</span></input><br><br>
+                <input name='options6' type='radio' value='4'><span>Somewhat hard</span></input><br><br>
+                <input name='options6' type='radio' value='5'><span>Very hard</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 7 -->
+        <div class='question'>
+            <p>7) How often do you get distracted while reading?</p>
+            <p>Distraction Level:</p>
+            <form>
+                <input name='options7' type='radio' value='1'><span>Always</span></input><br><br>
+                <input name='options7' type='radio' value='2'><span>Often</span></input><br><br>
+                <input name='options7' type='radio' value='3'><span>Sometimes</span></input><br><br>
+                <input name='options7' type='radio' value='4'><span>Rarely</span></input><br><br>
+                <input name='options7' type='radio' value='5'><span>Never</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 8 -->
+        <div class='question'>
+            <p>8) Do you enjoy writing stories or keeping a journal?</p>
+            <p>Enjoyment Level:</p>
+            <form>
+                <input name='options8' type='radio' value='1'><span>Love it</span></input><br><br>
+                <input name='options8' type='radio' value='2'><span>Like it</span></input><br><br>
+                <input name='options8' type='radio' value='3'><span>Neutral</span></input><br><br>
+                <input name='options8' type='radio' value='4'><span>Dislike it</span></input><br><br>
+                <input name='options8' type='radio' value='5'><span>Hate it</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 9 -->
+        <div class='question'>
+            <p>9) How do you feel about your ability to sound out words?</p>
+            <p>Feelings:</p>
+            <form>
+                <input name='options9' type='radio' value='1'><span>Very good</span></input><br><br>
+                <input name='options9' type='radio' value='2'><span>Good</span></input><br><br>
+                <input name='options9' type='radio' value='3'><span>Okay</span></input><br><br>
+                <input name='options9' type='radio' value='4'><span>Not so good</span></input><br><br>
+                <input name='options9' type='radio' value='5'><span>Very poor</span></input><br><br>
+            </form>
+        </div>
+
+        <!-- Question 10 -->
+        <div class='question'>
+            <p>10) When you look at a page of text, how do you feel?</p>
+            <p>Feelings:</p>
+            <form>
+                <input name='options10' type='radio' value='1'><span>Excited</span></input><br><br>
+                <input name='options10' type='radio' value='2'><span>Curious</span></input><br><br>
+                <input name='options10' type='radio' value='3'><span>Indifferent</span></input><br><br>
+                <input name='options10' type='radio' value='4'><span>Overwhelmed</span></input><br><br>
+                <input name='options10' type='radio' value='5'><span>Frustrated</span></input><br><br>
+            </form>
+        </div>
+
+        <br>
+        <div id='but'>
+            <button id='prev'>Previous</button>
+            <button id='next'>Next</button>
+            <button id='submit'>Submit</button>
+        </div>
+        <div id='Score'>
+            <h4>Result:</h4>
+            <p id='score'></p><br>
+            <p id='dys'></p><br>
+            <button id='restart'>Restart</button>
+            <a href="diagnosis.html"><button>Back to diagnostic testing</button></a>
+        </div>
+    </div>
+</body>
+</html>
